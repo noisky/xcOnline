@@ -1,0 +1,11 @@
+# Intellij idea files
+.idea/
+*.iml
+# Generated files
+target
+# node_modules
+node_modules
+# bootstrap
+bootstrap
+# jquery
+jquery
