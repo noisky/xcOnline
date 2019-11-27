@@ -14,7 +14,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "axios": "^0.16.2",
+    "axios": "^0.18.1",
     "cnpm": "^5.2.0",
     "echarts": "^3.3.2",
     "element-ui": "^2.13.0",
@@ -31,7 +31,7 @@
     "vue-router": "^3.0.1",
     "vuex": "^2.0.0-rc.6"
   },
-  "devDependencies": {
+  "np": {
     "autoprefixer": "^7.2.6",
     "axios-mock-adapter": "^1.7.1",
     "babel-core": "^6.22.1",
@@ -53,7 +53,7 @@
     "copy-webpack-plugin": "^4.0.1",
     "cross-spawn": "^5.0.1",
     "css-loader": "^0.28.0",
-    "eslint": "^3.19.0",
+    "eslint": "^4.18.2",
     "eslint-config-standard": "^10.2.1",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.7.1",
@@ -91,8 +91,8 @@
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
     "webpack": "^3.6.0",
-    "webpack-bundle-analyzer": "^2.9.0",
-    "webpack-dev-server": "^2.9.1",
+    "webpack-bundle-analyzer": "^3.3.2",
+    "webpack-dev-server": "^3.1.14",
     "webpack-merge": "^4.1.0"
   },
   "engines": {
