@@ -29,7 +29,7 @@ public class Swagger2Configuration {
                 .title("学成网api文档")
                 .description("学成网api文档")
 //                .termsOfServiceUrl("/")
-                .version("1.0")
+                .version("1.1")
                 .build();
     }
 

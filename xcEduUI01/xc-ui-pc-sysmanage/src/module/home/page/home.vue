@@ -242,6 +242,10 @@
           box-sizing: border-box;
         }
       }
+      .breadcrumb-container.el-col.el-col-24 {
+        margin-bottom: 10px;
+      }
     }
   }
+
 </style>

@@ -7,9 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -73,5 +71,48 @@ public class CmsPageRepositoryTest {
             cmsPage.setPageName("测试页面01");
             cmsPageRepository.save(cmsPage);
         }
+    }
+
+    @Test
+    public void testFindAllByExample() {
+        //分页参数
+        int page = 0;
+        int size = 10;
+        Pageable pageable = PageRequest.of(page, size);
+
+        //条件值对象
+        CmsPage cmsPage = new CmsPage();
+        //查询id为xxx站点的页面
+        cmsPage.setSiteId("5a751fab6abb5044e0d19ea1");
+        //条件匹配器
+        ExampleMatcher exampleMatcher = ExampleMatcher.matching();
+        //自定义Example
+        Example<CmsPage> example = Example.of(cmsPage, exampleMatcher);
+        Page<CmsPage> all = cmsPageRepository.findAll(example, pageable);
+        List<CmsPage> content = all.getContent();
+        System.out.println(content);
+
+    }
+
+    //自定义条件查询测试
+    @Test
+    public void testFindAll() {
+        //条件匹配器
+        ExampleMatcher exampleMatcher = ExampleMatcher.matching();
+        exampleMatcher = exampleMatcher.withMatcher("pageAliase", ExampleMatcher.GenericPropertyMatchers.contains());
+
+        //条件值
+        CmsPage cmsPage = new CmsPage();
+        //站点id
+        //cmsPage.setSiteId("5a751fab6abb5044e0d19ea1");
+        //模板id
+        //cmsPage.setTemplateId("5a962bf8b00ffc514038fafa");
+        //别名
+        cmsPage.setPageAliase("轮播");
+        //创建条件实例
+        Example<CmsPage> example = Example.of(cmsPage, exampleMatcher);
+        Pageable pageable = new PageRequest(0, 10);
+        Page<CmsPage> all = cmsPageRepository.findAll(example, pageable);
+        System.out.println(all);
     }
 }
