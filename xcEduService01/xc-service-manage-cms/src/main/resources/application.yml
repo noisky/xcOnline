@@ -8,3 +8,7 @@ spring:
       #uri:  mongodb://root:123@localhost:27017
       uri:  mongodb://localhost:27017
       database: xc_cms
+  freemarker:
+    cache: false #关闭缓存模式，方便测试
+    settings:
+      template_update_delay: 0 #检查模板更新延迟时间，设置为0表示立即检查，如果时间大于0会有缓存不方便进行模板测试

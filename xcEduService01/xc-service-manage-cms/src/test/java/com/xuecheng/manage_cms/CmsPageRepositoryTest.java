@@ -3,17 +3,21 @@ package com.xuecheng.manage_cms;
 import com.xuecheng.framework.domain.cms.CmsPage;
 import com.xuecheng.framework.domain.cms.CmsPageParam;
 import com.xuecheng.manage_cms.dao.CmsPageRepository;
+import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.*;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 /**
  * Created by fanfan on 2019/11/24.
@@ -22,9 +26,15 @@ import java.util.Optional;
 @RunWith(SpringRunner.class)
 public class CmsPageRepositoryTest {
 
+    @Autowired
+    GridFsTemplate gridFsTemplate;
+
     //注入dao
     @Autowired
     private CmsPageRepository cmsPageRepository;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     //分页查询测试
     @Test
@@ -114,5 +124,26 @@ public class CmsPageRepositoryTest {
         Pageable pageable = new PageRequest(0, 10);
         Page<CmsPage> all = cmsPageRepository.findAll(example, pageable);
         System.out.println(all);
+    }
+
+    //通过restTemplate进行远程访问
+    @Test
+    public void testRestTemplate() {
+        ResponseEntity<Map> forEntity = restTemplate.getForEntity("http://127.0.0.1:31001/cms/config/getmodel/5a791725dd573c3574ee333f", Map.class);
+        System.out.println(forEntity);
+    }
+
+    //将模板文件储存到GridGs
+    @Test
+    public void testGridFs() throws FileNotFoundException {
+        //要存储的文件
+        File file = new File("F:\\JAVA\\IdeaProjects\\JavaEE-Demo\\xcOnline\\xcEduService01\\test-freemarker\\src\\test\\resources\\templates\\index_banner.ftl");
+        //定义输入流
+        FileInputStream inputStram = new FileInputStream(file);
+        //向GridFS存储文件
+        ObjectId objectId = gridFsTemplate.store(inputStram, "轮播图测试文件01", "");
+        //得到文件ID
+        String fileId = objectId.toString();
+        System.out.println(file);
     }
 }

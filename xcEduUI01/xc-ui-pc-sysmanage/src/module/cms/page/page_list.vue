@@ -13,7 +13,8 @@
       </el-select>
       <el-input v-model="queryParam.pageName" style="width: 150px" size="small" placeholder="页面名称"></el-input>
       <el-input v-model="queryParam.pageAliase" style="width: 150px" size="small" placeholder="页面别名"></el-input>
-      <el-input v-model="queryParam.pageType" style="width: 180px" size="small" placeholder="页面类型(0:静态/1:动态)"></el-input>
+      <el-input v-model="queryParam.pageType" style="width: 180px" size="small"
+                placeholder="页面类型(0:静态/1:动态)"></el-input>
       <el-button type="primary" v-on:click="query" size="small">查询</el-button>
       <router-link class="mui-tab-item" :to="{path:'/cms/page/add/', query: {
         page: this.params.page,
@@ -41,7 +42,7 @@
       </el-table-column>
       <el-table-column prop="pagePhysicalPath" label="物理路径">
       </el-table-column>
-      <el-table-column prop="pageCreateTime" label="创建时间">
+      <el-table-column prop="pageCreateTime" label="创建时间" width="250">
       </el-table-column>
       <el-table-column label="操作" align="center" width="180">
         <template slot-scope="page">
@@ -52,6 +53,15 @@
           <el-button
             size="mini" type="danger"
             @click="pageDelete(page.row)">删除
+          </el-button>
+          <br />
+          <el-button
+            size="mini" type="warning"
+            @click="pagePreview(page.row)">预览
+          </el-button>
+          <el-button
+            size="mini" type="success"
+            @click="pageSubmit(page.row)">发布
           </el-button>
         </template>
       </el-table-column>
@@ -137,6 +147,12 @@
                         message: '删除已取消'
                     });
                 });
+            },
+            pagePreview(row) {
+                window.open("http://www.xuecheng.com/cms/preview/" + row.pageId);
+            },
+            pageSubmit(row) {
+                alert("pageId为：" + row.pageId + "，该功能尚未实现");
             }
 
         },
