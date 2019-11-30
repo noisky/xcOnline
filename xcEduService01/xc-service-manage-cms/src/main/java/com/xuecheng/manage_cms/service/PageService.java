@@ -272,11 +272,11 @@ public class PageService {
         //根据页面模板id获取页面模板
         Optional<CmsTemplate> optional = cmsTemplateRepository.findById(templateId);
         if (optional.isPresent()) {
-            //查询到模板
+            //查询到模板信息
             CmsTemplate cmsTemplate = optional.get();
-            //获取模板FileId
+            //获取模板的FileId
             String templateFileId = cmsTemplate.getTemplateFileId();
-            //取出模板文件内容
+            //根据到gridFs中取出模板文件内容
             GridFSFile gridFSFile = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(templateFileId)));
             //打开下载流对象
             GridFSDownloadStream gridFSDownloadStream = gridFSBucket.openDownloadStream(gridFSFile.getObjectId());
@@ -313,7 +313,6 @@ public class PageService {
         }
         //通过restTemplate请求dataUrl获取数据
         ResponseEntity<Map> forEntity = restTemplate.getForEntity(dataUrl, Map.class);
-        Map body = forEntity.getBody();
-        return body;
+        return forEntity.getBody();
     }
 }

@@ -144,6 +144,6 @@ public class CmsPageRepositoryTest {
         ObjectId objectId = gridFsTemplate.store(inputStram, "轮播图测试文件01", "");
         //得到文件ID
         String fileId = objectId.toString();
-        System.out.println(file);
+        System.out.println(fileId);
     }
 }

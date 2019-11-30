@@ -5,7 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
     <modules>
         <module>../xc-service-manage-cms</module>
-        <module>../test-freemarker</module>
+        <!--<module>../test-freemarker</module>
+        <module>../test-rabbitmq-consumer</module>
+        <module>../test-rabbitmq-producer</module>-->
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
