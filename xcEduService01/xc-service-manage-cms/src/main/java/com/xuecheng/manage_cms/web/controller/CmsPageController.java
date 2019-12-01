@@ -88,4 +88,15 @@ public class CmsPageController implements CmsPageControllerApi {
     public ResponseResult delete(@PathVariable("id") String id) {
         return pageService.delete(id);
     }
+
+    /**
+     * 发布页面
+     * @param pageId 发布页面的id
+     * @return 发布结果
+     */
+    @Override
+    @PostMapping("/postPage/{pageId}")
+    public ResponseResult post(@PathVariable("pageId") String pageId) {
+        return pageService.postPage(pageId);
+    }
 }

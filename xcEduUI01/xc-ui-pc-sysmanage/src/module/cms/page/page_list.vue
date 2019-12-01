@@ -152,9 +152,31 @@
                 window.open("http://www.xuecheng.com/cms/preview/" + row.pageId);
             },
             pageSubmit(row) {
-                alert("pageId为：" + row.pageId + "，该功能尚未实现");
+                //alert("pageId为：" + row.pageId + "，该功能尚未实现");
+                this.$confirm("确认要发布吗？", "提示", {
+                    type: "warning",
+                }).then(() => {
+                    cmsApi.page_postPage(row.pageId).then((res) => {
+                        if (res.success) {
+                            this.$message({
+                                type: 'success',
+                                message: '发布成功'
+                            });
+                        } else {
+                            //页面发布失败
+                            this.$message.error(res.message);
+                        }
+                    }).finally(() => {
+                        //刷新页面
+                        this.query();
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '页面发布已取消'
+                    });
+                });
             }
-
         },
         //页面渲染之前，将添加页面返回操作路由里面的数据拿出来进行页面的回显
         created() {
