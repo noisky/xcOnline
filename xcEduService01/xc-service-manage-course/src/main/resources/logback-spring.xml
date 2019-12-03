@@ -39,7 +39,7 @@
         <appender-ref ref="CONSOLE"/>
     </logger>
     <logger name="org.springframework.boot" level="DEBUG"/>
-    <root level="info">
+    <root level="debug">
         <!--<appender-ref ref="ASYNC"/>-->
         <appender-ref ref="FILE"/>
         <appender-ref ref="CONSOLE"/>

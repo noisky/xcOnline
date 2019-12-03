@@ -1,14 +1,14 @@
 import http from './../../../base/api/public'
 import querystring from 'querystring'
 
-let sysConfig = require('@/../config/sysConfig')
+let sysConfig = require('@/../config/sysConfig');
 let apiUrl = sysConfig.xcApiUrlPre;
 
 //查询课程列表
 //我的课程列表
 export const findCourseList = (page, size, params) => {
 //使用工具类将json对象转成key/value
-  let queries = querystring.stringify(params)
+  let queries = querystring.stringify(params);
   return http.requestQuickGet(apiUrl + "/course/coursebase/list/" + page + "/" + size + "?" + queries)
 };
 
@@ -28,7 +28,22 @@ export const findTeachplanList = courseid => {
 export const addTeachplan = teachplah => {
   return http.requestPost(apiUrl + '/course/teachplan/add', teachplah)
 };
-
+//获取课程基本信息
+export const getCoursebaseById = id => {
+  return http.requestQuickGet(apiUrl + '/course/coursebase/get/' + id)
+};
+//更新课程基本信息
+export const updateCoursebase = (id, course) => {
+  return http.requestPut(apiUrl + '/course/coursebase/update/' + id, course)
+};
+//获取课程营销信息
+export const getCourseMarketById = id => {
+  return http.requestQuickGet(apiUrl + '/course/coursemarket/get/' + id)
+};
+// 更新课程营销信息
+export const updateCourseMarket = (id, courseMarket) => {
+  return http.requestPost(apiUrl + '/course/coursemarket/update/' + id, courseMarket)
+};
 //保存课程图片地址到课程数据 库
 export const addCoursePic = (courseId, pic) => {
   return http.requestPost(apiUrl + '/course/coursepic/add?courseId=' + courseId + "&pic=" + pic)

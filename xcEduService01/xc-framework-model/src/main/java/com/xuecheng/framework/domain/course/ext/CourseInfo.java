@@ -14,4 +14,10 @@ public class CourseInfo extends CourseBase {
     //课程图片
     private String pic;
 
+    //课程名称
+    private String name;
+
+    //课程id
+    private String id;
+
 }
