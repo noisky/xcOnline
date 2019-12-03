@@ -327,7 +327,11 @@ public class PageService {
         return forEntity.getBody();
     }
 
-    //页面发布
+    /**
+     * 页面发布
+     * @param pageId
+     * @return
+     */
     public ResponseResult postPage(String pageId) {
         //执行静态化
         String pageHtml = this.getPageHtml(pageId);
@@ -341,7 +345,10 @@ public class PageService {
         return new ResponseResult(CommonCode.SUCCESS);
     }
 
-    //发送页面，发布消息
+    /**
+     * 发布消息
+     * @param pageId
+     */
     private void sendPostPage(String pageId) {
         CmsPage cmsPage = this.getById(pageId);
         if (cmsPage == null) {
@@ -357,7 +364,12 @@ public class PageService {
         this.rabbitTemplate.convertAndSend(RabbitMQConfig.EX_ROUTING_CMS_POSTPAGE, siteId, msg);
     }
 
-    //保存静态文件内容
+    /**
+     * 保存静态文件内容
+     * @param pageId 页面id
+     * @param content 需要保存的文件
+     * @return
+     */
     private CmsPage saveHtml(String pageId, String content) {
         //查询页面
         Optional<CmsPage> optional = cmsPageRepository.findById(pageId);

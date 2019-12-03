@@ -1,0 +1,7 @@
+#body{
+	margin-top: 40px;
+	margin-bottom: 50px;
+}
+li.el-menu-item {
+  float: left;
+}

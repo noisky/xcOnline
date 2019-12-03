@@ -148,9 +148,11 @@
                     });
                 });
             },
+            //页面预览
             pagePreview(row) {
                 window.open("http://www.xuecheng.com/cms/preview/" + row.pageId);
             },
+            //页面发布
             pageSubmit(row) {
                 //alert("pageId为：" + row.pageId + "，该功能尚未实现");
                 this.$confirm("确认要发布吗？", "提示", {

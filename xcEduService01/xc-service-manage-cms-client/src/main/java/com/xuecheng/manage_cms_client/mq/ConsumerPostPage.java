@@ -26,6 +26,10 @@ public class ConsumerPostPage {
     @Autowired
     private PageService pageService;
 
+    /**
+     * 监听mq队列，解析消息，并执行消息
+     * @param msg
+     */
     @RabbitListener(queues = {"${xuecheng.mq.queue}"})
     public void postPage(String msg) {
         //解析消息
