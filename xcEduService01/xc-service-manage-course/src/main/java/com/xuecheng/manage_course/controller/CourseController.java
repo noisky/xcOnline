@@ -3,6 +3,7 @@ package com.xuecheng.manage_course.controller;
 import com.xuecheng.api.course.CourseControllerApi;
 import com.xuecheng.framework.domain.course.CourseBase;
 import com.xuecheng.framework.domain.course.CourseMarket;
+import com.xuecheng.framework.domain.course.CoursePic;
 import com.xuecheng.framework.domain.course.Teachplan;
 import com.xuecheng.framework.domain.course.ext.TeachplanNode;
 import com.xuecheng.framework.domain.course.request.CourseListRequest;
@@ -57,7 +58,7 @@ public class CourseController implements CourseControllerApi {
      * @return 查询结果
      */
     @Override
-    @RequestMapping("/coursebase/list/{page}/{size}")
+    @GetMapping("/coursebase/list/{page}/{size}")
     public QueryResponseResult findCourseList(@PathVariable("page") Integer page, @PathVariable("size") Integer size, CourseListRequest courseListRequest) {
         return courseService.findCourseList(page, size, courseListRequest);
     }
@@ -101,6 +102,7 @@ public class CourseController implements CourseControllerApi {
 
     /**
      * 根据课程id获取课程营销信息
+     *
      * @param courseId 课程id
      * @return 营销信息
      */
@@ -112,7 +114,8 @@ public class CourseController implements CourseControllerApi {
 
     /**
      * 更新课程营销信息
-     * @param id 课程id
+     *
+     * @param id           课程id
      * @param courseMarket 营销信息
      * @return 结果
      */
@@ -125,5 +128,40 @@ public class CourseController implements CourseControllerApi {
         } else {
             return new ResponseResult(CommonCode.FAIL);
         }
+    }
+
+    /**
+     * 保存课程图片信息
+     * @param courseId 课程id
+     * @param pic 图片信息
+     * @return 执行结果
+     */
+    @Override
+    @PostMapping("/coursepic/add")
+    public ResponseResult addCoursePic(@RequestParam("courseId") String courseId, @RequestParam("pic") String pic) {
+        //保存课程图片
+        return courseService.saveCoursePic(courseId, pic);
+    }
+
+    /**
+     * 根据课程id查询课程图片信息
+     * @param courseId 课程id
+     * @return 课程图片信息
+     */
+    @Override
+    @GetMapping("/coursepic/list/{courseId}")
+    public CoursePic findCoursePic(@PathVariable("courseId") String courseId) {
+        return courseService.findCoursepic(courseId);
+    }
+
+    /**
+     * 删除课程图片
+     * @param courseId 课程id
+     * @return 删除结果
+     */
+    @Override
+    @DeleteMapping("/coursepic/delete")
+    public ResponseResult deleteCoursePic(@RequestParam("courseId") String courseId) {
+        return courseService.deleteCoursePic(courseId);
     }
 }

@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.xuecheng.framework.domain.course.CourseBase;
 import com.xuecheng.framework.domain.course.CourseMarket;
+import com.xuecheng.framework.domain.course.CoursePic;
 import com.xuecheng.framework.domain.course.Teachplan;
 import com.xuecheng.framework.domain.course.ext.CourseInfo;
 import com.xuecheng.framework.domain.course.ext.TeachplanNode;
@@ -45,6 +46,9 @@ public class CourseService {
 
     @Autowired
     CourseMarketRepository courseMarketRepository;
+
+    @Autowired
+    CoursePicRepository coursePicRepository;
 
     //查询课程计划
     public TeachplanNode findTeachplanList(String courseId) {
@@ -221,4 +225,50 @@ public class CourseService {
         return one;
     }
 
+    //添加课程图片
+    @Transactional
+    public ResponseResult saveCoursePic(String courseId, String pic) {
+        //查询课程图片
+        Optional<CoursePic> optional = coursePicRepository.findById(courseId);
+        CoursePic coursePic = null;
+        if (optional.isPresent()) {
+            //拿到查到的图片
+            coursePic = optional.get();
+        }
+        //没有课程图片则新建对象
+        if (coursePic == null) {
+            coursePic = new CoursePic();
+        }
+        //设置信息
+        coursePic.setPic(pic);
+        coursePic.setCourseid(courseId);
+        //保存课程图片
+        coursePicRepository.save(coursePic);
+        //返回执行结果
+        return new ResponseResult(CommonCode.SUCCESS);
+    }
+
+    //获取课程图片
+    public CoursePic findCoursepic(String courseId) {
+        //根据课程id查询课程图片信息
+        Optional<CoursePic> optional = coursePicRepository.findById(courseId);
+        if (optional.isPresent()) {
+            return optional.get();
+        }
+        //未查到返回null
+        return null;
+    }
+
+    //删除课程图片
+    @Transactional
+    public ResponseResult deleteCoursePic(String courseId) {
+        //调用dao删除图片，返回的是影响的数据库行数
+        long result = coursePicRepository.deleteByCourseid(courseId);
+        if (result > 0) {
+            //删除成功
+            return new ResponseResult(CommonCode.SUCCESS);
+        }
+        //删除失败
+        return new ResponseResult(CommonCode.FAIL);
+    }
 }
