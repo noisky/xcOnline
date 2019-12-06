@@ -10,3 +10,5 @@ node_modules
 bootstrap
 # jquery
 jquery
+# Log files
+myLog
