@@ -266,7 +266,7 @@
                 //初始学习状态
                 //根据课程收费判断
                 if(this.charge == '203001'){
-                    this.learnstatus = 2 //免费，报名后即可学习
+                    this.learnstatus = 1 //免费，报名后即可学习
                 }else{
                     this.learnstatus = 3 //收费，需要购买后可学习
                 }
@@ -288,22 +288,22 @@
         },
        created() {
            this.courseId = courseId;
-           this.charge = charge
+           //this.charge = charge
            this.getLearnstatus();
            //获取教育机构的统计数据
            queryCompanyStat(this.companyId).then((res)=>{
-               console.log(res)
+               console.log(res);
                if(res.stat){
-                   this.company_stat = res.stat
+                   this.company_stat = res.stat;
                    console.log(this.company_stat)
                }
 
            })
            //获取课程的统计数据
            queryCourseStat(this.courseId).then((res)=>{
-               console.log(res)
+               console.log(res);
                if(res.stat){
-                   let stat = res.stat
+                   let stat = res.stat;
                   for(var i=0;i<stat.length;i++){
                       this.course_stat['s'+stat[i].id] = stat[i].value
                   }
