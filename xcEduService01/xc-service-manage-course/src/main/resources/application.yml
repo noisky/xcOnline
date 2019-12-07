@@ -33,6 +33,6 @@ course-publish: #课程预览页面信息
   siteId: 5dea317a1bfe3259b87ffa02
   templateId: 5ad9a24d68db5239b8fef199
   previewUrl: http://www.xuecheng.com/cms/preview/
-  pageWebPath: /course/detail/
+  pageWebPath: course/detail/
   pagePhysicalPath: /course/
   dataUrlPre: http://localhost:31200/course/courseview/

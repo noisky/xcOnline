@@ -4,6 +4,7 @@ import com.xuecheng.api.cms.CmsPageControllerApi;
 import com.xuecheng.framework.domain.cms.CmsPage;
 import com.xuecheng.framework.domain.cms.request.QueryPageRequest;
 import com.xuecheng.framework.domain.cms.response.CmsPageResult;
+import com.xuecheng.framework.domain.cms.response.CmsPostPageResult;
 import com.xuecheng.framework.model.response.QueryResponseResult;
 import com.xuecheng.framework.model.response.ResponseResult;
 import com.xuecheng.manage_cms.service.PageService;
@@ -22,8 +23,9 @@ public class CmsPageController implements CmsPageControllerApi {
 
     /**
      * 分页条件查询
-     * @param page 当前页
-     * @param size 每页查询数据
+     *
+     * @param page        当前页
+     * @param size        每页查询数据
      * @param pageRequest 查询条件
      * @return 查询结果
      */
@@ -57,6 +59,7 @@ public class CmsPageController implements CmsPageControllerApi {
 
     /**
      * 根据id查询
+     *
      * @param id 查询的id
      * @return 查询结果
      */
@@ -68,7 +71,8 @@ public class CmsPageController implements CmsPageControllerApi {
 
     /**
      * 根据id更新页面
-     * @param id 更新的页面id
+     *
+     * @param id      更新的页面id
      * @param cmsPage 更新的页面信息
      * @return 更新结果
      */
@@ -80,6 +84,7 @@ public class CmsPageController implements CmsPageControllerApi {
 
     /**
      * 根据id删除页面
+     *
      * @param id 删除页面的id
      * @return 删除结果
      */
@@ -91,6 +96,7 @@ public class CmsPageController implements CmsPageControllerApi {
 
     /**
      * 发布页面
+     *
      * @param pageId 发布页面的id
      * @return 发布结果
      */
@@ -100,10 +106,28 @@ public class CmsPageController implements CmsPageControllerApi {
         return pageService.postPage(pageId);
     }
 
+    /**
+     * 保存页面
+     *
+     * @param cmsPage 保存的页面信息
+     * @return 保存结果
+     */
     @Override
     @PostMapping("/save")
     public CmsPageResult save(@RequestBody CmsPage cmsPage) {
         return pageService.save(cmsPage);
+    }
+
+    /**
+     * 一键发布页面
+     *
+     * @param cmsPage 发布的页面信息
+     * @return 发布结果
+     */
+    @Override
+    @PostMapping("/postPageQuick")
+    public CmsPostPageResult postPageQuick(@RequestBody CmsPage cmsPage) {
+        return pageService.postPageQuick(cmsPage);
     }
 
 }

@@ -134,8 +134,9 @@ public class CourseController implements CourseControllerApi {
 
     /**
      * 保存课程图片信息
+     *
      * @param courseId 课程id
-     * @param pic 图片信息
+     * @param pic      图片信息
      * @return 执行结果
      */
     @Override
@@ -147,6 +148,7 @@ public class CourseController implements CourseControllerApi {
 
     /**
      * 根据课程id查询课程图片信息
+     *
      * @param courseId 课程id
      * @return 课程图片信息
      */
@@ -158,6 +160,7 @@ public class CourseController implements CourseControllerApi {
 
     /**
      * 删除课程图片
+     *
      * @param courseId 课程id
      * @return 删除结果
      */
@@ -169,6 +172,7 @@ public class CourseController implements CourseControllerApi {
 
     /**
      * 根据课程id查询课程view信息
+     *
      * @param id 课程id
      * @return 查询结果
      */
@@ -178,9 +182,28 @@ public class CourseController implements CourseControllerApi {
         return courseService.getCourseView(id);
     }
 
+    /**
+     * 预览课程信息
+     *
+     * @param id 课程id
+     * @return 预览结果
+     */
     @Override
     @PostMapping("/preview/{id}")
     public CoursePublishResult preview(@PathVariable("id") String id) {
         return courseService.preview(id);
+    }
+
+    /**
+     * 发布课程详情页面
+     *
+     * @param id 课程id
+     * @return 发布结果
+     */
+    @Override
+    @PostMapping("/publish/{id}")
+    public CoursePublishResult publish(@PathVariable("id") String id) {
+        System.out.println(id);
+        return courseService.publish(id);
     }
 }
