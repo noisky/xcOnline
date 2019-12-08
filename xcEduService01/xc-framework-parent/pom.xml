@@ -7,6 +7,7 @@
         <module>../xc-service-manage-cms</module>
         <module>../xc-service-manage-cms-client</module>
         <module>../xc-register-center</module>
+        <module>../xc-service-search</module>
         <!--<module>../test-freemarker</module>
         <module>../test-rabbitmq-consumer</module>
         <module>../test-rabbitmq-producer</module>-->

@@ -22,6 +22,7 @@ public class CmsPagePreviewController extends BaseController {
 
     /**
      * 根据页面id进行静态页面预览
+     *
      * @param pageId 要预览的页面id
      */
     @GetMapping("/cms/preview/{pageId}")
@@ -29,7 +30,7 @@ public class CmsPagePreviewController extends BaseController {
         String pageHtml = pageService.getPageHtml(pageId);
         if (StringUtils.isNotEmpty(pageHtml)) {
             try {
-                response.setHeader("Content-type","text/html;charset=utf-8");
+                response.setHeader("Content-type", "text/html;charset=utf-8");
                 //使用response输出流输出页面
                 ServletOutputStream outputStream = response.getOutputStream();
                 outputStream.write(pageHtml.getBytes("utf-8"));
