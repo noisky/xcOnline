@@ -140,20 +140,20 @@ public class EsCourseService {
             String pic = (String) sourceAsMap.get("pic");
             coursePub.setPic(pic);
             //价格
-            Float price = null;
+            Double price = null;
             try {
                 if (sourceAsMap.get("price") != null) {
-                    price = Float.parseFloat((String) sourceAsMap.get("price"));
+                    price = (Double)sourceAsMap.get("price");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
             //设置价格
             coursePub.setPrice(price);
-            Float price_old = null;
+            Double price_old = null;
             try {
                 if (sourceAsMap.get("price_old") != null) {
-                    price_old = Float.parseFloat((String) sourceAsMap.get("price_old"));
+                    price_old = (Double) sourceAsMap.get("price_old");
                 }
             } catch (NumberFormatException e) {
                 e.printStackTrace();
