@@ -1,4 +1,4 @@
-package com.xuecheng.api.course;
+package com.xuecheng.api.search;
 
 import com.xuecheng.framework.domain.course.CoursePub;
 import com.xuecheng.framework.domain.search.CourseSearchParam;

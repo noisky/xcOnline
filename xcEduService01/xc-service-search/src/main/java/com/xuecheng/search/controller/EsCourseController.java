@@ -1,6 +1,6 @@
 package com.xuecheng.search.controller;
 
-import com.xuecheng.api.course.EsCourseControllerApi;
+import com.xuecheng.api.search.EsCourseControllerApi;
 import com.xuecheng.framework.domain.course.CoursePub;
 import com.xuecheng.framework.domain.search.CourseSearchParam;
 import com.xuecheng.framework.model.response.QueryResponseResult;
