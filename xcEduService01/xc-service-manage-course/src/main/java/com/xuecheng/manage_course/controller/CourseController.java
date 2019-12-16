@@ -201,7 +201,9 @@ public class CourseController implements CourseControllerApi {
     @PostMapping("/publish/{id}")
     public CoursePublishResult publish(@PathVariable("id") String id) {
         System.out.println(id);
-        return courseService.publish(id);
+        CoursePublishResult publish = courseService.publish(id);
+        return publish;
+        //return courseService.publish(id);
     }
 
     @Override
