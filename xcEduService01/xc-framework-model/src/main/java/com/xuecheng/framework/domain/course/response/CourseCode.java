@@ -20,6 +20,8 @@ public enum CourseCode implements ResultCode {
     COURSE_MEDIS_URLISNULL(false,31107,"选择的媒资文件访问地址为空！"),
     COURSE_MEDIS_NAMEISNULL(false,31108,"选择的媒资文件名称为空！"),
     COURSE_GET_NOTEXISTS(false,31109,"选择的媒资文件名称为空！"),
+    COURSE_MEDIA_TEACHPLAN_ISNULL(false,31111,"选择的媒资文件不存在！"),
+    COURSE_MEDIA_TEACHPLAN_GRADEERROR(false,31112,"选择的媒资文件等级错误！"),
     COURSE_PUBLISH_CREATE_INDEX_ERROR(false,31110,"创建课程索引信息失败！");
 
     //操作代码

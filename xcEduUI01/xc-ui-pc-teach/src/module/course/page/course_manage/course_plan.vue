@@ -53,7 +53,6 @@
           <el-button type="primary" v-on:click="addTeachplan">提交</el-button>
           <el-button type="primary" v-on:click="resetForm">重置</el-button>
         </el-form-item>
-
       </el-form>
     </el-dialog>
     <el-dialog title="选择媒资文件" :visible.sync="mediaFormVisible">

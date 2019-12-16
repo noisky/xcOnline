@@ -25,11 +25,11 @@
     <el-table :data="list" highlight-current-row v-loading="listLoading" style="width: 100%;">
       <el-table-column type="index" width="30">
       </el-table-column>
-      <el-table-column prop="fileOriginalName" label="原始文件名称" width="220">
+      <el-table-column prop="fileOriginalName" label="原始文件名称" width="250">
       </el-table-column>
-      <el-table-column prop="fileName" label="文件名称" width="220">
+      <el-table-column prop="fileName" label="文件名称">
       </el-table-column>
-      <el-table-column prop="fileUrl" label="访问url" width="260">
+      <el-table-column prop="fileUrl" label="访问url">
       </el-table-column>
       <el-table-column prop="tag" label="标签" width="100">
       </el-table-column>
@@ -72,7 +72,7 @@
       return {
         params:{
           page:1,//页码
-          size:10,//每页显示个数
+          size:5,//每页显示个数
           tag:'',//标签
           fileName:'',//文件名称
           processStatus:''//处理状态
@@ -138,6 +138,11 @@
           this.list = res.queryResult.list
         })
       }
+    },
+    //打开查询媒资文件窗口，传入课程计划id
+    querymedia(teachplanId){
+        this.activeTeachplanId = teachplanId;
+        this.mediaFormVisible = true;
     },
     created(){
         //默认第一页

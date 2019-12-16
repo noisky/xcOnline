@@ -1,15 +1,18 @@
 package com.xuecheng.manage_media.service;
 
+import com.alibaba.fastjson.JSON;
 import com.xuecheng.framework.domain.media.MediaFile;
 import com.xuecheng.framework.domain.media.response.CheckChunkResult;
 import com.xuecheng.framework.domain.media.response.MediaCode;
 import com.xuecheng.framework.exception.ExceptionCast;
 import com.xuecheng.framework.model.response.CommonCode;
 import com.xuecheng.framework.model.response.ResponseResult;
+import com.xuecheng.manage_media.config.RabbitMQConfig;
 import com.xuecheng.manage_media.dao.MediaFileRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -33,6 +36,12 @@ public class MediaUploadService {
     //上传文件的目录
     @Value("${xc-service-manage-media.upload-location}")
     String uploadPath;
+
+    @Value("${xc-service-manage-media.mq.routingkey-media-video}")
+    String routingkey_media_video;
+
+    @Autowired
+    RabbitTemplate rabbitTemplate;
 
     /**
      * 根据文件的md5获取文件路径
@@ -220,7 +229,32 @@ public class MediaUploadService {
         MediaFile save = mediaFileRepository.save(mediaFile);
         //删除分块文件
         deletePartFiles(chunkFileFolder);
+        //向MQ发送视频处理消息
+        return this.sendProcessVideoMsg(save.getFileId(), fileMd5);
+    }
+
+    //向MQ发送视频处理消息
+    public ResponseResult sendProcessVideoMsg(String mediaId, String fileMd5) {
+        Optional<MediaFile> optional = mediaFileRepository.findById(fileMd5);
+        if (!optional.isPresent()){
+            return new ResponseResult(CommonCode.FAIL);
+        }
+        MediaFile mediaFile = optional.get();
+        //发送视频处理消息
+        Map<String, String> msgMap = new HashMap<>();
+        msgMap.put("mediaId", mediaId);
+        //发送的消息
+        String msg = JSON.toJSONString(msgMap);
+        try {
+            this.rabbitTemplate.convertAndSend(RabbitMQConfig.EX_MEDIA_PROCESSTASK, routingkey_media_video, msg);
+            log.info("send media process task msg:{}", msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.info("send media process task error,msg is:{},error:{}", msg, e.getMessage());
+            return new ResponseResult(CommonCode.FAIL);
+        }
         return new ResponseResult(CommonCode.SUCCESS);
+
     }
 
     //上传成功后删除分块文件

@@ -8,15 +8,15 @@ import java.util.List;
  * 此文件用于视频文件处理，步骤如下：
  * 1、生成mp4
  * 2、生成m3u8
- *
  */
-public class HlsVideoUtil extends  VideoUtil {
+public class HlsVideoUtil extends VideoUtil {
 
-    String ffmpeg_path = "D:\\Program Files\\ffmpeg-20180227-fa0c9d6-win64-static\\bin\\ffmpeg.exe";//ffmpeg的安装位置
-    String video_path = "D:\\BaiduNetdiskDownload\\test1.avi";
-    String m3u8_name = "test1.m3u8";
-    String m3u8folder_path = "D:/BaiduNetdiskDownload/Movies/test1/";
-    public HlsVideoUtil(String ffmpeg_path, String video_path, String m3u8_name,String m3u8folder_path){
+    String ffmpeg_path = "F:\\Develop\\video\\ffmpeg-20191211-4110029-win64-static\\bin\\ffmpeg.exe";//ffmpeg的安装位置
+    String video_path = "F:\\Develop\\video\\solr.avi";
+    String m3u8_name = "test2.m3u8";
+    String m3u8folder_path = "F:\\Develop\\video\\test2\\";
+
+    public HlsVideoUtil(String ffmpeg_path, String video_path, String m3u8_name, String m3u8folder_path) {
         super(ffmpeg_path);
         this.ffmpeg_path = ffmpeg_path;
         this.video_path = video_path;
@@ -24,10 +24,10 @@ public class HlsVideoUtil extends  VideoUtil {
         this.m3u8folder_path = m3u8folder_path;
     }
 
-    private void clear_m3u8(String m3u8_path){
+    private void clear_m3u8(String m3u8_path) {
         //删除原来已经生成的m3u8及ts文件
         File m3u8dir = new File(m3u8_path);
-        if(!m3u8dir.exists()){
+        if (!m3u8dir.exists()) {
             m3u8dir.mkdirs();
         }
        /* if(m3u8dir.exists()&&m3u8_path.indexOf("/hls/")>=0){//在hls目录方可删除，以免错误删除
@@ -44,9 +44,10 @@ public class HlsVideoUtil extends  VideoUtil {
 
     /**
      * 生成m3u8文件
+     *
      * @return 成功则返回success，失败返回控制台日志
      */
-    public String generateM3u8(){
+    public String generateM3u8() {
         //清理m3u8文件目录
         clear_m3u8(m3u8folder_path);
  /*
@@ -63,9 +64,9 @@ public class HlsVideoUtil extends  VideoUtil {
         commend.add("0");
         commend.add("-hls_segment_filename");
 //        commend.add("D:/BaiduNetdiskDownload/Movies/test1/test1_%05d.ts");
-        commend.add(m3u8folder_path  + m3u8_name.substring(0,m3u8_name.lastIndexOf(".")) + "_%05d.ts");
+        commend.add(m3u8folder_path + m3u8_name.substring(0, m3u8_name.lastIndexOf(".")) + "_%05d.ts");
 //        commend.add("D:/BaiduNetdiskDownload/Movies/test1/test1.m3u8");
-        commend.add(m3u8folder_path  + m3u8_name );
+        commend.add(m3u8folder_path + m3u8_name);
         String outstring = null;
         try {
             ProcessBuilder builder = new ProcessBuilder();
@@ -82,12 +83,12 @@ public class HlsVideoUtil extends  VideoUtil {
         }
         //通过查看视频时长判断是否成功
         Boolean check_video_time = check_video_time(video_path, m3u8folder_path + m3u8_name);
-        if(!check_video_time){
+        if (!check_video_time) {
             return outstring;
         }
         //通过查看m3u8列表判断是否成功
         List<String> ts_list = get_ts_list();
-        if(ts_list == null){
+        if (ts_list == null) {
             return outstring;
         }
         return "success";
@@ -96,16 +97,16 @@ public class HlsVideoUtil extends  VideoUtil {
     }
 
 
-
     /**
      * 检查视频处理是否完成
+     *
      * @return ts列表
      */
     public List<String> get_ts_list() {
 //        String m3u8_name = video_name.substring(0, video_name.lastIndexOf("."))+".m3u8";
         List<String> fileList = new ArrayList<String>();
         List<String> tsList = new ArrayList<String>();
-        String m3u8file_path =m3u8folder_path + m3u8_name;
+        String m3u8file_path = m3u8folder_path + m3u8_name;
         BufferedReader br = null;
         String str = null;
         String bottomline = "";
@@ -113,15 +114,15 @@ public class HlsVideoUtil extends  VideoUtil {
             br = new BufferedReader(new FileReader(m3u8file_path));
             while ((str = br.readLine()) != null) {
                 bottomline = str;
-                if(bottomline.endsWith(".ts")){
+                if (bottomline.endsWith(".ts")) {
                     tsList.add(bottomline);
                 }
                 //System.out.println(str);
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            if(br!=null){
+        } finally {
+            if (br != null) {
                 try {
                     br.close();
                 } catch (IOException e) {
@@ -139,14 +140,12 @@ public class HlsVideoUtil extends  VideoUtil {
     }
 
 
-
-
     public static void main(String[] args) throws IOException {
-        String ffmpeg_path = "D:\\Program Files\\ffmpeg-20180227-fa0c9d6-win64-static\\bin\\ffmpeg.exe";//ffmpeg的安装位置
-        String video_path = "E:\\ffmpeg_test\\1.mp4";
-        String m3u8_name = "1.m3u8";
-        String m3u8_path = "E:\\ffmpeg_test\\1\\";
-        HlsVideoUtil videoUtil = new HlsVideoUtil(ffmpeg_path,video_path,m3u8_name,m3u8_path);
+        String ffmpeg_path = "F:\\Develop\\video\\ffmpeg-20191211-4110029-win64-static\\bin\\ffmpeg.exe";//ffmpeg的安装位置
+        String video_path = "F:\\Develop\\video\\solr.avi";
+        String m3u8_name = "test2.m3u8";
+        String m3u8_path = "F:\\Develop\\video\\test2\\";
+        HlsVideoUtil videoUtil = new HlsVideoUtil(ffmpeg_path, video_path, m3u8_name, m3u8_path);
         String s = videoUtil.generateM3u8();
         System.out.println(s);
         System.out.println(videoUtil.get_ts_list());

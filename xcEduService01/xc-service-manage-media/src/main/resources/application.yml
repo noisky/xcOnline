@@ -6,10 +6,13 @@ spring:
   data:
     mongodb:
       #uri:  mongodb://root:123@localhost:27017
-      //uri:  mongodb://localhost:27017
+      uri:  mongodb://localhost:27017
       database: xc_media
 xc-service-manage-media:
   upload-location: F:/develop/video/upload/
+  mq:
+    queue-media-video-processor: queue_media_video_processor
+    routingkey-media-video: routingkey_media_video
 eureka:
   client:
     registerWithEureka: true #服务注册开关
