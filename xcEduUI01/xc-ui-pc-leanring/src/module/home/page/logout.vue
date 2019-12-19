@@ -33,7 +33,7 @@ export default {
     loginApi.logout({}).then((res) => {
         if(res.success){
           sessionStorage.removeItem('activeUser');
-          this.$message('退出成功');
+          this.$message.success('退出成功');
           this.logoutsuccess = true
         }else{
           this.logoutsuccess = false

@@ -418,7 +418,6 @@ public class CourseService {
 
         //获取页面的url
         String pageUrl = cmsPostPageResult.getPageUrl();
-        System.out.println(pageUrl);
         return new CoursePublishResult(CommonCode.SUCCESS, pageUrl);
         //return null;
     }
@@ -555,6 +554,7 @@ public class CourseService {
         for (TeachplanMedia teachplanMedia : teachplanMediaList) {
             TeachplanMediaPub teachplanMediaPub = new TeachplanMediaPub();
             BeanUtils.copyProperties(teachplanMedia, teachplanMediaPub);
+            //添加时间戳
             teachplanMediaPub.setTimestamp(new Date());
             teachplanMediaPubList.add(teachplanMediaPub);
         }
