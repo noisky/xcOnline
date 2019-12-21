@@ -53,8 +53,8 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if(openAuthenticate){
 
-    // console.log(to)
-    // console.log(from)
+    console.log("111"+to)
+    console.log("222"+from)
     //***********身份校验***************
     let activeUser
     let uid
