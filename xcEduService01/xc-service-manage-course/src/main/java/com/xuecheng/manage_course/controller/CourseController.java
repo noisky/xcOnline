@@ -2,16 +2,21 @@ package com.xuecheng.manage_course.controller;
 
 import com.xuecheng.api.course.CourseControllerApi;
 import com.xuecheng.framework.domain.course.*;
+import com.xuecheng.framework.domain.course.ext.CourseInfo;
 import com.xuecheng.framework.domain.course.ext.CourseView;
 import com.xuecheng.framework.domain.course.ext.TeachplanNode;
 import com.xuecheng.framework.domain.course.request.CourseListRequest;
 import com.xuecheng.framework.domain.course.response.AddCourseResult;
 import com.xuecheng.framework.domain.course.response.CoursePublishResult;
+import com.xuecheng.framework.exception.ExceptionCast;
 import com.xuecheng.framework.model.response.CommonCode;
 import com.xuecheng.framework.model.response.QueryResponseResult;
 import com.xuecheng.framework.model.response.ResponseResult;
+import com.xuecheng.framework.utils.XcOauth2Util;
+import com.xuecheng.framework.web.BaseController;
 import com.xuecheng.manage_course.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -19,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/course")
-public class CourseController implements CourseControllerApi {
+public class CourseController extends BaseController implements CourseControllerApi {
 
     @Autowired
     CourseService courseService;
@@ -31,6 +36,7 @@ public class CourseController implements CourseControllerApi {
      * @return 课程计划
      */
     @Override
+    @PreAuthorize("hasAuthority('course_teachplan_list')")
     @GetMapping("/teachplan/list/{courseId}")
     public TeachplanNode findTeachplanList(@PathVariable("courseId") String courseId) {
         return courseService.findTeachplanList(courseId);
@@ -57,9 +63,19 @@ public class CourseController implements CourseControllerApi {
      * @return 查询结果
      */
     @Override
+    @PreAuthorize("hasAuthority('course_find_list')")
     @GetMapping("/coursebase/list/{page}/{size}")
-    public QueryResponseResult findCourseList(@PathVariable("page") Integer page, @PathVariable("size") Integer size, CourseListRequest courseListRequest) {
-        return courseService.findCourseList(page, size, courseListRequest);
+    public QueryResponseResult<CourseInfo> findCourseList(@PathVariable("page") Integer page, @PathVariable("size") Integer size, CourseListRequest courseListRequest) {
+        //先使用静态数据测试
+        //String companyId = "1";
+        //调用工具类取出用户信息
+        XcOauth2Util xcOauth2Util = new XcOauth2Util();
+        XcOauth2Util.UserJwt userJwt = xcOauth2Util.getUserJwtFromHeader(request);
+        if(userJwt == null){
+            ExceptionCast.cast(CommonCode.UNAUTHENTICATED);
+        }
+        String companyId = userJwt.getCompanyId();
+        return courseService.findCourseList(companyId, page, size, courseListRequest);
     }
 
     /**
@@ -81,6 +97,7 @@ public class CourseController implements CourseControllerApi {
      * @return 课程信息
      */
     @Override
+    //@PreAuthorize("hasAuthority('course_get_baseinfo')")
     @GetMapping("/coursebase/get/{courseId}")
     public CourseBase getCourseBaseById(@PathVariable("courseId") String courseId) {
         return courseService.getCoursebaseById(courseId);

@@ -1,8 +1,7 @@
 package com.xuecheng.api.course;
 
-import com.xuecheng.framework.domain.cms.CmsPage;
-import com.xuecheng.framework.domain.cms.response.CmsPageResult;
 import com.xuecheng.framework.domain.course.*;
+import com.xuecheng.framework.domain.course.ext.CourseInfo;
 import com.xuecheng.framework.domain.course.ext.CourseView;
 import com.xuecheng.framework.domain.course.ext.TeachplanNode;
 import com.xuecheng.framework.domain.course.request.CourseListRequest;
@@ -12,7 +11,6 @@ import com.xuecheng.framework.model.response.QueryResponseResult;
 import com.xuecheng.framework.model.response.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * Created by fanfan on 2019/12/02.
@@ -25,9 +23,6 @@ public interface CourseControllerApi {
 
     @ApiOperation("添加课程计划")
     public ResponseResult addTeachplan(Teachplan teachplan);
-
-    @ApiOperation("查询课程列表")
-    public QueryResponseResult findCourseList(Integer page, Integer size, CourseListRequest courseListRequest);
 
     @ApiOperation("添加课程基础信息")
     public AddCourseResult addCourseBase(CourseBase courseBase);
@@ -60,8 +55,13 @@ public interface CourseControllerApi {
     public CoursePublishResult preview(String id);
 
     @ApiOperation("发布课程")
-    public CoursePublishResult publish(@PathVariable String id);
+    public CoursePublishResult publish(String id);
 
     @ApiOperation("保存媒资信息")
     public ResponseResult savemedia(TeachplanMedia teachplanMedia);
+
+    @ApiOperation("课程查询")
+    public QueryResponseResult<CourseInfo> findCourseList(Integer page,
+                                                          Integer size,
+                                                          CourseListRequest courseListRequest);
 }

@@ -12,5 +12,6 @@
         (SELECT pic FROM course_pic WHERE courseid = course_base.id) pic
         FROM
         course_base
+        where company_id = #{companyId}
     </select>
 </mapper>

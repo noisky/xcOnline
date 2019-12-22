@@ -28,7 +28,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Id;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -162,11 +161,13 @@ public class CourseService {
     }
 
     //查询我的课程
-    public QueryResponseResult findCourseList(Integer page, Integer size, CourseListRequest courseListRequest) {
+    public QueryResponseResult<CourseInfo> findCourseList(String companyId, Integer page, Integer size, CourseListRequest courseListRequest) {
         //如果查询参数为空则新建查询参数对象
         if (courseListRequest == null) {
             courseListRequest = new CourseListRequest();
         }
+        //设置企业id
+        courseListRequest.setCompanyId(companyId);
         //进行页面非法判断
         if (page <= 0) {
             page = 0;
@@ -188,7 +189,7 @@ public class CourseService {
         courseInfoQueryResult.setList(listResult);
         courseInfoQueryResult.setTotal(total);
         //返回查询结果
-        return new QueryResponseResult(CommonCode.SUCCESS, courseInfoQueryResult);
+        return new QueryResponseResult<CourseInfo>(CommonCode.SUCCESS, courseInfoQueryResult);
     }
 
     //添加课程提交

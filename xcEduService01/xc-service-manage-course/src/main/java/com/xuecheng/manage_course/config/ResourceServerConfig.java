@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 /**
  * Created by fanfan on 2019/12/17.
  */
+
 @Configuration
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)//激活方法上的PreAuthorize注解
@@ -63,7 +64,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 //下边的路径放行
                 .antMatchers("/v2/api-docs", "/swagger-resources/configuration/ui",
                         "/swagger-resources","/swagger-resources/configuration/security",
-                        "/swagger-ui.html","/webjars/**","/course/coursepic/list/**").permitAll()
+                        "/swagger-ui.html","/webjars/**","/course/coursepic/list/**","/course/courseview/**").permitAll()
                 .anyRequest().authenticated();
     }
 }

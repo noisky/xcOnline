@@ -115,8 +115,9 @@
         mounted() {
             // 查询课程分类
             courseApi.category_findlist().then(res => {
+                alert("????????????")
                 this.categoryList = res.children;
-                console.log(this.categoryList)
+                console.log("查询课程分类"+this.categoryList)
             });
 
             //查询数据字典
